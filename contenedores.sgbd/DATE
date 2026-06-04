@@ -1,0 +1,45 @@
+#Crea una base de datos 
+CREATE DATABASE prueba_atributos;
+
+#Utiliza la base de datos
+USE prueba_atributos;
+
+#Creacion de tabla empleado
+CREATE TABLE empleado(
+id int not null PRIMARY KEY,
+nombre varchar(50) NOT NULL,
+apellido1 varchar(15) NOT NULL,
+apellido2 varchar(15) NULL,
+fecha_Ingreso DATE NOT NULL
+);
+
+INSERT INTO empleado
+VALUES (1, 'Reboriano', 'Robless', 'De la Torre', '1983-04-06');
+
+SELECT 
+*, YEAR(fecha_ingreso), MONTH (fecha_ingreso), DAY(fecha_ingreso)
+FROM empleado;
+
+ALTER TABLE empleado
+ADD COLUMN fecha_naci DATE NOT NULL;
+
+UPDATE empleado
+SET fecha_naci = '1983-04-06'
+WHERE id = 1;
+
+SELECT 
+ nombre,
+ apellido1,
+ apellido2,
+ fecha_ingreso,
+ fecha_naci,
+ timestampdiff(year, fecha_naci, CURDATE()) AS Edad 
+ FROM empleado;
+
+
+
+
+
+
+
+temino de ejemplos del modelo E-R, almacenados en el archivo scriptpuriebasalsserver.sl y se terminaron de configurar los contenedores de los sgbd mariadb, sl server y postgres
