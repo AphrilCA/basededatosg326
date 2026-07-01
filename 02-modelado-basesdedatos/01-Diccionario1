@@ -1,0 +1,105 @@
+1. Información General
+
+| Elemento | Valor |
+| :--- | :--- |
+| Proyecto | Sistema de expediente médico |
+| Versión | 1.0 |
+| Fecha | Junio 2026 |
+| Elaboró | Aphril Ivonne Celaya Abreo |
+| SGBD | SQL Server |
+
+<br>
+
+2. Descripción del sistema de base de datos
+
+- Pacientes
+- Expedientes
+
+Permite controlar la información de los pacientes y su expediente médico correspondiente.
+
+<br><br>
+
+3. Catálogo de Restricciones Utilizadas
+
+| Código | Significado |
+| :--- | :--- |
+| PK | Primary Key |
+| FK | Foreign Key |
+| NN | NOT NULL |
+| UQ | UNIQUE |
+| AI | Auto increment |
+| CK | Check |
+| DF | Default |
+
+<br>
+
+4. Diccionario de datos <br>
+
+**Tabla:** Paciente
+
+**Descripción:** _Almacena la información general de los pacientes_
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NomPaciente | INT | - | PK, NN | Identificador único del paciente |
+| Nombre | VARCHAR | 100 | NN | Nombre completo del paciente |
+| NomPrinc | VARCHAR | 50 | NN | Nombre principal del paciente |
+| Apellido1 | VARCHAR | 50 | NN | Primer apellido del paciente |
+| Apellido2 | VARCHAR | 50 | NULL | Segundo apellido del paciente |
+| FechaNaci | DATE | - | NN | Fecha de nacimiento del paciente |
+
+---
+
+<br><br>
+
+**Tabla:** Expediente
+
+**Descripción:** _Almacena la información del expediente médico del paciente_
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumExp | INT | - | PK, NN | Número único del expediente |
+| FechaApertura | DATE | - | NN | Fecha en que se abrió el expediente |
+| TipoSangre | VARCHAR | 5 | NN | Tipo de sangre del paciente |
+| NomPaciente | INT | - | FK, NN, UQ | Paciente al que pertenece el expediente |
+
+<br>
+
+5. Relaciones del sistema
+
+| Relación | Cardinalidad | Descripción |
+| :--- | :---: | :--- |
+| Paciente -> Expediente | 1:1 | Un paciente tiene un solo expediente |
+| Expediente -> Paciente | 1:1 | Un expediente pertenece a un solo paciente |
+
+<br>
+
+6. Matriz de Claves Foráneas
+
+| Tabla | Campo FK | Descripción |
+| :--- | :---: | :--- |
+| Expediente | NomPaciente | Paciente (NomPaciente) |
+
+<br>
+
+7. Integridad referencial
+
+| Regla | Descripción |
+| :--- | :--- |
+| IR-01 | No se puede registrar un expediente sin un paciente existente |
+| IR-02 | No se puede asignar más de un expediente al mismo paciente |
+| IR-03 | No se puede eliminar un paciente si tiene un expediente relacionado |
+
+<br>
+
+8. Reglas del negocio
+
+| Código | Regla |
+| :--- | :--- |
+| RN-01 | Un paciente debe tener un expediente |
+| RN-02 | Un expediente pertenece únicamente a un paciente |
+| RN-03 | Cada paciente tiene como máximo un expediente |
+<br>
+
+9. Diagrama Relacional
+![Solucion Ej1](../img/Paciente,expediente.drawio.png)

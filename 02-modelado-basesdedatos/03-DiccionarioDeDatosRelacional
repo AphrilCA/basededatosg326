@@ -109,7 +109,7 @@ Permite controlar la oferta educativa y la inscripcion de los estudiantes
 <br>
 
 9. Diagrama Relacional
-![Solucion Ej2]()
+![Solucion Ej1](../img/Paciente,expediente.drawio.png)
 
 
 
@@ -128,6 +128,3 @@ Permite controlar la oferta educativa y la inscripcion de los estudiantes
 
 
 
-
-
-//Tipos de datos de los 3 sistemas gestores, mariadb, postgres, sqlserver

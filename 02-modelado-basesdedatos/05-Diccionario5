@@ -1,0 +1,183 @@
+# 1. Información General
+
+| Elemento | Valor |
+| :--- | :--- |
+| Proyecto | Sistema de administración empresarial |
+| Versión | 1.0 |
+| Fecha | Junio 2026 |
+| Elaboró | Aphril Ivonne Celaya Abreo |
+| SGBD | SQL Server |
+
+<br>
+
+# 2. Descripción del sistema de base de datos
+
+- Empleados
+- Departamentos
+- Ubicaciones
+- Proyectos
+- Dependientes
+- Asignaciones de proyectos
+
+Permite administrar la información de los empleados, departamentos, proyectos, ubicaciones y dependientes de una empresa, así como la asignación de empleados a los proyectos.
+
+<br><br>
+
+# 3. Catálogo de Restricciones Utilizadas
+
+| Código | Significado |
+| :--- | :--- |
+| PK | Primary Key |
+| FK | Foreign Key |
+| NN | NOT NULL |
+| UQ | UNIQUE |
+| AI | Auto Increment |
+| CK | Check |
+| DF | Default |
+
+<br>
+
+# 4. Diccionario de datos
+
+**Tabla:** Employee
+
+**Descripción:** _Almacena la información de los empleados._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Ssn | CHAR | 11 | PK, NN | Número de seguro social del empleado |
+| FirstName | VARCHAR | 50 | NN | Nombre |
+| LastName | VARCHAR | 50 | NN | Apellido |
+| Address | VARCHAR | 150 | NN | Dirección |
+| Bdate | DATE | - | NN | Fecha de nacimiento |
+| Salary | DECIMAL | 10,2 | NN | Salario |
+| Sex | CHAR | 1 | NN | Sexo |
+| Jef | CHAR | 11 | FK | Supervisor del empleado |
+| IdDepartment | INT | FK, NN | Departamento al que pertenece |
+
+---
+
+**Tabla:** Department
+
+**Descripción:** _Almacena la información de los departamentos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| IdDepartment | INT | - | PK, AI, NN | Identificador del departamento |
+| Number | INT | - | UQ, NN | Número del departamento |
+| Name | VARCHAR | 100 | UQ, NN | Nombre del departamento |
+| Manager | CHAR | 11 | FK, UQ, NN | Empleado que administra el departamento |
+| StartDate | DATE | - | NN | Fecha de inicio del gerente |
+
+---
+
+**Tabla:** Location
+
+**Descripción:** _Almacena las ubicaciones de los departamentos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumLocation | INT | - | PK, AI, NN | Identificador de la ubicación |
+| IdDepartment | INT | FK, NN | Departamento correspondiente |
+| Location | VARCHAR | 100 | NN | Ubicación del departamento |
+
+---
+
+**Tabla:** Projects
+
+**Descripción:** _Almacena la información de los proyectos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| IdProject | INT | - | PK, AI, NN | Identificador del proyecto |
+| Name | VARCHAR | 100 | UQ, NN | Nombre del proyecto |
+| Number | INT | - | UQ, NN | Número del proyecto |
+| IdDepartment | INT | FK, NN | Departamento responsable |
+
+---
+
+**Tabla:** Dependent
+
+**Descripción:** _Almacena los dependientes de cada empleado._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Name | VARCHAR | 100 | PK, NN | Nombre del dependiente |
+| Ssn | CHAR | 11 | PK, FK, NN | Empleado al que pertenece |
+| Sex | CHAR | 1 | NN | Sexo |
+| Relationship | VARCHAR | 30 | NN | Parentesco |
+
+---
+
+**Tabla:** Works_On
+
+**Descripción:** _Relaciona los empleados con los proyectos en los que trabajan._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Ssn | CHAR | 11 | PK, FK, NN | Empleado asignado |
+| IdProject | INT | PK, FK, NN | Proyecto asignado |
+| Hours | DECIMAL | 5,2 | NN | Horas trabajadas |
+
+<br>
+
+# 5. Relaciones del sistema
+
+| Relación | Cardinalidad | Descripción |
+| :--- | :---: | :--- |
+| Department -> Employee | 1:N | Un departamento tiene varios empleados |
+| Employee -> Department | 1:1 | Cada empleado pertenece a un departamento |
+| Employee -> Employee | 1:N | Un empleado puede supervisar a varios empleados |
+| Employee -> Dependent | 1:N | Un empleado puede tener varios dependientes |
+| Department -> Location | 1:N | Un departamento puede tener varias ubicaciones |
+| Department -> Projects | 1:N | Un departamento controla varios proyectos |
+| Employee -> Works_On | 1:N | Un empleado puede trabajar en varios proyectos |
+| Projects -> Works_On | 1:N | Un proyecto puede tener varios empleados asignados |
+| Employee -> Department (Manager) | 1:1 | Un departamento tiene un único gerente |
+
+<br>
+
+# 6. Matriz de Claves Foráneas
+
+| Tabla | Campo FK | Descripción |
+| :--- | :---: | :--- |
+| Employee | IdDepartment | Department (IdDepartment) |
+| Employee | Jef | Employee (Ssn) |
+| Department | Manager | Employee (Ssn) |
+| Location | IdDepartment | Department (IdDepartment) |
+| Projects | IdDepartment | Department (IdDepartment) |
+| Dependent | Ssn | Employee (Ssn) |
+| Works_On | Ssn | Employee (Ssn) |
+| Works_On | IdProject | Projects (IdProject) |
+
+<br>
+
+# 7. Integridad referencial
+
+| Regla | Descripción |
+| :--- | :--- |
+| IR-01 | No se puede registrar un empleado en un departamento inexistente. |
+| IR-02 | No se puede registrar un proyecto para un departamento inexistente. |
+| IR-03 | No se puede registrar una ubicación para un departamento inexistente. |
+| IR-04 | No se puede registrar un dependiente para un empleado inexistente. |
+| IR-05 | No se puede asignar un empleado a un proyecto inexistente. |
+| IR-06 | No se puede eliminar un departamento mientras existan empleados, proyectos o ubicaciones relacionadas. |
+
+<br>
+
+# 8. Reglas del negocio
+
+| Código | Regla |
+| :--- | :--- |
+| RN-01 | Cada empleado pertenece a un solo departamento. |
+| RN-02 | Un departamento puede tener muchos empleados. |
+| RN-03 | Cada departamento tiene un único gerente. |
+| RN-04 | Un empleado puede supervisar a varios empleados. |
+| RN-05 | Un empleado puede trabajar en varios proyectos y un proyecto puede tener varios empleados. |
+| RN-06 | Un empleado puede registrar varios dependientes. |
+| RN-07 | Un departamento puede controlar varios proyectos y tener varias ubicaciones. |
+
+<br>
+
+9. Diagrama Relacional
+![Solucion Ej5](../img/Ingles%20sencillo.drawio.png)

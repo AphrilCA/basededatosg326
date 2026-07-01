@@ -1,0 +1,104 @@
+# 1. Información General
+
+| Elemento | Valor |
+| :--- | :--- |
+| Proyecto | Sistema de gestión de cursos |
+| Versión | 1.0 |
+| Fecha | Junio 2026 |
+| Elaboró | Aphril Ivonne Celaya Abreo |
+| SGBD | SQL Server |
+
+<br>
+
+# 2. Descripción del sistema de base de datos
+
+- Profesores
+- Cursos
+
+Permite administrar la información de los profesores y los cursos que imparten.
+
+<br><br>
+
+# 3. Catálogo de Restricciones Utilizadas
+
+| Código | Significado |
+| :--- | :--- |
+| PK | Primary Key |
+| FK | Foreign Key |
+| NN | NOT NULL |
+| UQ | UNIQUE |
+| AI | Auto increment |
+| CK | Check |
+| DF | Default |
+
+<br>
+
+# 4. Diccionario de datos
+
+**Tabla:** Profesor
+
+**Descripción:** _Almacena la información de los profesores._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumProfesor | INT | - | PK, NN | Identificador único del profesor |
+| Nombre | VARCHAR | 100 | NN | Nombre completo del profesor |
+| NomPrincipal | VARCHAR | 50 | NN | Nombre principal del profesor |
+| Apellido1 | VARCHAR | 50 | NN | Primer apellido |
+| Apellido2 | VARCHAR | 50 | NULL | Segundo apellido |
+| Especialidad | VARCHAR | 100 | NN | Especialidad del profesor |
+
+---
+
+**Tabla:** Curso
+
+**Descripción:** _Almacena la información de los cursos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumCurso | INT | - | PK, NN | Identificador único del curso |
+| NombreCurso | VARCHAR | 100 | NN | Nombre del curso |
+| Creditos | INT | - | NN, CK (>0) | Créditos asignados al curso |
+| NumProfesor | INT | - | FK, NN | Profesor que imparte el curso |
+
+<br>
+
+# 5. Relaciones del sistema
+
+| Relación | Cardinalidad | Descripción |
+| :--- | :---: | :--- |
+| Profesor -> Curso | 1:N | Un profesor puede impartir varios cursos |
+| Curso -> Profesor | N:1 | Cada curso es impartido por un solo profesor |
+
+<br>
+
+# 6. Matriz de Claves Foráneas
+
+| Tabla | Campo FK | Descripción |
+| :--- | :---: | :--- |
+| Curso | NumProfesor | Profesor (NumProfesor) |
+
+<br>
+
+# 7. Integridad referencial
+
+| Regla | Descripción |
+| :--- | :--- |
+| IR-01 | No se puede registrar un curso con un profesor inexistente. |
+| IR-02 | No se puede eliminar un profesor si tiene cursos asignados. |
+| IR-03 | Todo curso debe estar asociado a un profesor válido. |
+
+<br>
+
+# 8. Reglas del negocio
+
+| Código | Regla |
+| :--- | :--- |
+| RN-01 | Un profesor puede impartir uno o varios cursos. |
+| RN-02 | Cada curso debe ser impartido por un único profesor. |
+| RN-03 | Todo profesor debe tener una especialidad registrada. |
+
+<br>
+
+9. Diagrama Relacional
+![Solucion Ej2](../img/Profesor,%20curso.drawio.png)

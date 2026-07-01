@@ -105,9 +105,4 @@ REFERENCES profesor (Numprof)
 GO
 
 
-
-
-
-
-
 SELECT GETDATE()

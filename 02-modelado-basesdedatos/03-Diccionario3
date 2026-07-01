@@ -1,0 +1,114 @@
+# 1. Información General
+
+| Elemento | Valor |
+| :--- | :--- |
+| Proyecto | Sistema de inscripción escolar |
+| Versión | 1.0 |
+| Fecha | Junio 2026 |
+| Elaboró | Aphril Ivonne Celaya Abreo |
+| SGBD | SQL Server |
+
+<br>
+
+# 2. Descripción del sistema de base de datos
+
+- Alumnos
+- Materias
+- Inscripciones
+
+Permite administrar las inscripciones de los alumnos a las materias, registrando la fecha de inscripción y la calificación final obtenida.
+
+<br><br>
+
+# 3. Catálogo de Restricciones Utilizadas
+
+| Código | Significado |
+| :--- | :--- |
+| PK | Primary Key |
+| FK | Foreign Key |
+| NN | NOT NULL |
+| UQ | UNIQUE |
+| AI | Auto increment |
+| CK | Check |
+| DF | Default |
+
+<br>
+
+# 4. Diccionario de datos
+
+**Tabla:** Alumno
+
+**Descripción:** _Almacena la información de los alumnos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumAlumno | INT | - | PK, NN | Identificador único del alumno |
+| Semestre | INT | - | NN, CK (>0) | Semestre que cursa el alumno |
+
+---
+
+**Tabla:** Materia
+
+**Descripción:** _Almacena la información de las materias._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| ClaveMateria | VARCHAR | 10 | PK, NN | Clave única de la materia |
+| NombreMateria | VARCHAR | 100 | NN | Nombre de la materia |
+| Creditos | INT | - | NN, CK (>0) | Créditos de la materia |
+
+---
+
+**Tabla:** Inscripción
+
+**Descripción:** _Registra la inscripción de los alumnos a las materias._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| id_inscripcion | INT | - | PK, AI, NN | Identificador único de la inscripción |
+| NumAlumno | INT | - | FK, NN | Alumno inscrito |
+| ClaveMateria | VARCHAR | 10 | FK, NN | Materia inscrita |
+| FechaInscrip | DATE | - | NN | Fecha de inscripción |
+| CalificacionFinal | DECIMAL | 4,2 | CK (0-10) | Calificación final obtenida |
+
+<br>
+
+# 5. Relaciones del sistema
+
+| Relación | Cardinalidad | Descripción |
+| :--- | :---: | :--- |
+| Alumno -> Inscripción | 1:N | Un alumno puede realizar varias inscripciones |
+| Materia -> Inscripción | 1:N | Una materia puede tener varios alumnos inscritos |
+
+<br>
+
+# 6. Matriz de Claves Foráneas
+
+| Tabla | Campo FK | Descripción |
+| :--- | :---: | :--- |
+| Inscripción | NumAlumno | Alumno (NumAlumno) |
+| Inscripción | ClaveMateria | Materia (ClaveMateria) |
+
+<br>
+
+# 7. Integridad referencial
+
+| Regla | Descripción |
+| :--- | :--- |
+| IR-01 | No se puede registrar una inscripción para un alumno inexistente. |
+| IR-02 | No se puede registrar una inscripción para una materia inexistente. |
+| IR-03 | No se puede eliminar un alumno o una materia si existen inscripciones asociadas. |
+
+<br>
+
+# 8. Reglas del negocio
+
+| Código | Regla |
+| :--- | :--- |
+| RN-01 | Un alumno puede inscribirse en varias materias. |
+| RN-02 | Una materia puede tener inscritos varios alumnos. |
+| RN-03 | Cada inscripción debe registrar la fecha de inscripción y la calificación final del alumno. |
+ <br>
+
+9. Diagrama Relacional
+![Solucion Ej3](../img/Alumno,inscribe,materia.drawio.png)

@@ -1,0 +1,179 @@
+# 1. Información General
+
+| Elemento | Valor |
+| :--- | :--- |
+| Proyecto | Sistema de administración empresarial |
+| Versión | 1.0 |
+| Fecha | Junio 2026 |
+| Elaboró | Aphril Ivonne Celaya Abreo |
+| SGBD | SQL Server |
+
+<br>
+
+# 2. Descripción del sistema de base de datos
+
+- Employee
+- Department
+- Locations
+- Projects
+- Dependent
+- Works_On
+
+Permite administrar la información de los empleados, departamentos, ubicaciones, proyectos, dependientes y las asignaciones de empleados a proyectos.
+
+<br><br>
+
+# 3. Catálogo de Restricciones Utilizadas
+
+| Código | Significado |
+| :--- | :--- |
+| PK | Primary Key |
+| FK | Foreign Key |
+| NN | NOT NULL |
+| UQ | UNIQUE |
+| AI | Auto Increment |
+| CK | Check |
+| DF | Default |
+
+<br>
+
+# 4. Diccionario de datos
+
+**Tabla:** Employee
+
+**Descripción:** _Almacena la información de los empleados._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Ssn | CHAR | 11 | PK, NN | Identificador del empleado |
+| FirstName | VARCHAR | 50 | NN | Nombre |
+| LastName | VARCHAR | 50 | NN | Apellido |
+| Address | VARCHAR | 150 | NN | Dirección |
+| Bdate | DATE | - | NN | Fecha de nacimiento |
+| Salary | DECIMAL | 10,2 | NN | Salario |
+| Sex | CHAR | 1 | NN | Sexo |
+| Jef | CHAR | 11 | FK | Supervisor del empleado |
+| NumberDep | INT | FK | Número del departamento |
+| NameDep | VARCHAR | 100 | FK, NN | Nombre del departamento |
+
+---
+
+**Tabla:** Department
+
+**Descripción:** _Almacena la información de los departamentos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Number | INT | - | PK, NN | Número del departamento |
+| Name | VARCHAR | 100 | UQ, NN | Nombre del departamento |
+| Manager | CHAR | 11 | FK, UQ, NN | Gerente del departamento |
+| StartDate | DATE | - | NN | Fecha de inicio del gerente |
+
+---
+
+**Tabla:** Locations
+
+**Descripción:** _Almacena las ubicaciones de los departamentos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumLocation | INT | - | PK, NN | Identificador de la ubicación |
+| NumberDep | INT | FK | Número del departamento |
+| NameDep | VARCHAR | 100 | FK, NN | Nombre del departamento |
+| Location | VARCHAR | 100 | NN | Ubicación del departamento |
+
+---
+
+**Tabla:** Projects
+
+**Descripción:** _Almacena la información de los proyectos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Name | VARCHAR | 100 | PK, NN | Nombre del proyecto |
+| Number | INT | UQ, NN | Número del proyecto |
+| Location | VARCHAR | 100 | NN | Ubicación del proyecto |
+
+---
+
+**Tabla:** Dependent
+
+**Descripción:** _Almacena los dependientes de los empleados._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Name | VARCHAR | 100 | PK, NN | Nombre del dependiente |
+| Ssn | CHAR | 11 | PK, FK, NN | Empleado al que pertenece |
+| Sex | CHAR | 1 | NN | Sexo |
+| RelationShip | VARCHAR | 30 | NN | Parentesco |
+
+---
+
+**Tabla:** Works_On
+
+**Descripción:** _Relaciona los empleados con los proyectos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Ssn | CHAR | 11 | PK, FK, NN | Empleado asignado |
+| NameProj | VARCHAR | 100 | FK | Nombre del proyecto |
+| NumberProj | INT | PK, FK | Número del proyecto |
+
+<br>
+
+# 5. Relaciones del sistema
+
+| Relación | Cardinalidad | Descripción |
+| :--- | :---: | :--- |
+| Department -> Employee | 1:N | Un departamento tiene varios empleados |
+| Employee -> Dependent | 1:N | Un empleado puede tener varios dependientes |
+| Department -> Locations | 1:N | Un departamento puede tener varias ubicaciones |
+| Department -> Projects | 1:N | Un departamento controla varios proyectos |
+| Employee -> Works_On | 1:N | Un empleado puede trabajar en varios proyectos |
+| Projects -> Works_On | 1:N | Un proyecto puede tener varios empleados asignados |
+| Employee -> Employee | 1:N | Un empleado puede supervisar a otros empleados |
+
+<br>
+
+# 6. Matriz de Claves Foráneas
+
+| Tabla | Campo FK | Descripción |
+| :--- | :---: | :--- |
+| Employee | NumberDep | Department (Number) |
+| Employee | NameDep | Department (Name) |
+| Employee | Jef | Employee (Ssn) |
+| Locations | NumberDep | Department (Number) |
+| Locations | NameDep | Department (Name) |
+| Dependent | Ssn | Employee (Ssn) |
+| Works_On | Ssn | Employee (Ssn) |
+| Works_On | NameProj | Projects (Name) |
+| Works_On | NumberProj | Projects (Number) |
+
+<br>
+
+# 7. Integridad referencial
+
+| Regla | Descripción |
+| :--- | :--- |
+| IR-01 | No se puede registrar un empleado en un departamento inexistente. |
+| IR-02 | No se puede registrar una ubicación para un departamento inexistente. |
+| IR-03 | No se puede registrar un dependiente para un empleado inexistente. |
+| IR-04 | No se puede asignar un empleado a un proyecto inexistente. |
+| IR-05 | No se puede eliminar un departamento si existen empleados o ubicaciones relacionadas. |
+
+<br>
+
+# 8. Reglas del negocio
+
+| Código | Regla |
+| :--- | :--- |
+| RN-01 | Cada empleado pertenece a un solo departamento. |
+| RN-02 | Un departamento puede tener varios empleados. |
+| RN-03 | Un empleado puede supervisar a otros empleados. |
+| RN-04 | Un empleado puede tener varios dependientes. |
+| RN-05 | Un departamento puede tener varias ubicaciones. |
+| RN-06 | Un empleado puede trabajar en varios proyectos y un proyecto puede tener varios empleados asignados. |
+
+<br>
+9. Diagrama Relacional
+![Solucion Ej6](../img/Ingles,%20elaborado.drawio.png)

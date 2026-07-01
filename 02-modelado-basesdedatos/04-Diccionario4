@@ -1,0 +1,133 @@
+# 1. Información General
+
+| Elemento | Valor |
+| :--- | :--- |
+| Proyecto | Sistema de gestión de pedidos |
+| Versión | 1.0 |
+| Fecha | Junio 2026 |
+| Elaboró | Aphril Ivonne Celaya Abreo |
+| SGBD | SQL Server |
+
+<br>
+
+# 2. Descripción del sistema de base de datos
+
+- Clientes
+- Pedidos
+- Productos
+- Contiene
+
+Permite administrar los pedidos realizados por los clientes y los productos que contiene cada pedido.
+
+<br><br>
+
+# 3. Catálogo de Restricciones Utilizadas
+
+| Código | Significado |
+| :--- | :--- |
+| PK | Primary Key |
+| FK | Foreign Key |
+| NN | NOT NULL |
+| UQ | UNIQUE |
+| AI | Auto increment |
+| CK | Check |
+| DF | Default |
+
+<br>
+
+# 4. Diccionario de datos
+
+**Tabla:** Cliente
+
+**Descripción:** _Almacena la información de los clientes._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Identificador | INT | - | PK, NN | Identificador único del cliente |
+| Nombre | VARCHAR | 100 | NN | Nombre completo del cliente |
+| NombrePrin | VARCHAR | 50 | NN | Nombre principal |
+| Apellido1 | VARCHAR | 50 | NN | Primer apellido |
+| Apellido2 | VARCHAR | 50 | NULL | Segundo apellido |
+
+---
+
+**Tabla:** Pedido
+
+**Descripción:** _Almacena la información de los pedidos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumPedido | INT | - | PK, NN | Identificador único del pedido |
+| FechaPedido | DATE | - | NN | Fecha en que se realizó el pedido |
+| Identificador | INT | - | FK, NN | Cliente que realizó el pedido |
+
+---
+
+**Tabla:** Producto
+
+**Descripción:** _Almacena la información de los productos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumProducto | INT | - | PK, NN | Identificador único del producto |
+| NombreProducto | VARCHAR | 100 | NN | Nombre del producto |
+| PrecioProducto | DECIMAL | 10,2 | NN, CK (>0) | Precio del producto |
+
+---
+
+**Tabla:** Contiene
+
+**Descripción:** _Relaciona los pedidos con los productos que contienen._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumPedido | INT | - | PK, FK, NN | Pedido al que pertenece el producto |
+| NumProducto | INT | - | PK, FK, NN | Producto incluido en el pedido |
+| CantidadVendida | INT | - | NN, CK (>0) | Cantidad del producto vendida |
+| Precio | DECIMAL | 10,2 | NN, CK (>0) | Precio de venta del producto en el pedido |
+
+<br>
+
+# 5. Relaciones del sistema
+
+| Relación | Cardinalidad | Descripción |
+| :--- | :---: | :--- |
+| Cliente -> Pedido | 1:N | Un cliente puede realizar varios pedidos |
+| Pedido -> Contiene | 1:N | Un pedido puede contener varios productos |
+| Producto -> Contiene | 1:N | Un producto puede estar en varios pedidos |
+
+<br>
+
+# 6. Matriz de Claves Foráneas
+
+| Tabla | Campo FK | Descripción |
+| :--- | :---: | :--- |
+| Pedido | Identificador | Cliente (Identificador) |
+| Contiene | NumPedido | Pedido (NumPedido) |
+| Contiene | NumProducto | Producto (NumProducto) |
+
+<br>
+
+# 7. Integridad referencial
+
+| Regla | Descripción |
+| :--- | :--- |
+| IR-01 | No se puede registrar un pedido para un cliente inexistente. |
+| IR-02 | No se puede agregar un producto a un pedido si el producto no existe. |
+| IR-03 | No se puede eliminar un pedido o un producto mientras existan registros relacionados en la tabla Contiene. |
+
+<br>
+
+# 8. Reglas del negocio
+
+| Código | Regla |
+| :--- | :--- |
+| RN-01 | Un cliente puede realizar uno o varios pedidos. |
+| RN-02 | Un pedido debe pertenecer a un solo cliente. |
+| RN-03 | Un pedido debe contener al menos un producto. |
+| RN-04 | Un producto puede formar parte de varios pedidos. |
+| RN-05 | En cada producto incluido en un pedido se debe registrar la cantidad vendida y el precio de venta. |
+<br>
+
+9. Diagrama Relacional
+![Solucion Ej4](../img/ClientePedido.drawio.png)

@@ -1,0 +1,235 @@
+# 1. Información General
+
+| Elemento | Valor |
+| :--- | :--- |
+| Proyecto | Sistema de gestión universitaria |
+| Versión | 1.0 |
+| Fecha | Junio 2026 |
+| Elaboró | Aphril Ivonne Celaya Abreo |
+| SGBD | SQL Server |
+
+<br>
+
+# 2. Descripción del sistema de base de datos
+
+- Alumnos
+- Teléfonos
+- Credenciales
+- Materias
+- Profesores
+- Departamentos
+- Proyectos
+- Dependientes
+- Participaciones
+- Cursas
+
+Permite administrar la información académica de los alumnos, profesores, departamentos, materias, proyectos y las relaciones existentes entre ellos.
+
+<br><br>
+
+# 3. Catálogo de Restricciones Utilizadas
+
+| Código | Significado |
+| :--- | :--- |
+| PK | Primary Key |
+| FK | Foreign Key |
+| NN | NOT NULL |
+| UQ | UNIQUE |
+| AI | Auto Increment |
+| CK | Check |
+| DF | Default |
+
+<br>
+
+# 4. Diccionario de datos
+
+### **Tabla:** Alumno
+
+**Descripción:** _Almacena la información de los alumnos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Matricula | VARCHAR | 10 | PK, NN | Matrícula del alumno |
+| Nombre | VARCHAR | 50 | NN | Nombre |
+| Apellido1 | VARCHAR | 50 | NN | Primer apellido |
+| Apellido2 | VARCHAR | 50 | NULL | Segundo apellido |
+| Correo | VARCHAR | 100 | UQ, NN | Correo electrónico |
+| FechaNaci | DATE | - | NN | Fecha de nacimiento |
+
+---
+
+### **Tabla:** Telefono
+
+**Descripción:** _Almacena los teléfonos de los alumnos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| ClaveTel | INT | - | PK, NN | Identificador del teléfono |
+| Matricula | VARCHAR | 10 | FK, NN | Alumno propietario |
+| Telefono | VARCHAR | 15 | NN | Número telefónico |
+
+---
+
+### **Tabla:** Credencial
+
+**Descripción:** _Almacena la credencial de cada alumno._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumCredencial | INT | - | PK, NN | Número de credencial |
+| FechaExp | DATE | - | NN | Fecha de expedición |
+| Vigencia | DATE | - | NN | Fecha de vigencia |
+| Matricula | VARCHAR | 10 | FK, UQ, NN | Alumno propietario |
+
+---
+
+### **Tabla:** Profesor
+
+**Descripción:** _Almacena la información de los profesores._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumProf | INT | - | PK, NN | Identificador del profesor |
+| Nombre | VARCHAR | 50 | NN | Nombre |
+| Apellido1 | VARCHAR | 50 | NN | Primer apellido |
+| Apellido2 | VARCHAR | 50 | NULL | Segundo apellido |
+| NumDepto | INT | FK, NN | Departamento al que pertenece |
+
+---
+
+### **Tabla:** Departamento
+
+**Descripción:** _Almacena los departamentos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumDepto | INT | - | PK, NN | Identificador del departamento |
+| NombreDepto | VARCHAR | 100 | NN | Nombre del departamento |
+| Edificio | VARCHAR | 50 | NN | Edificio donde se ubica |
+
+---
+
+### **Tabla:** Materia
+
+**Descripción:** _Almacena las materias._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| ClaveMateria | VARCHAR | 10 | PK, NN | Clave de la materia |
+| NombreMateria | VARCHAR | 100 | NN | Nombre de la materia |
+| Creditos | INT | NN, CK (>0) | Créditos de la materia |
+| NumProf | INT | FK, NN | Profesor que la imparte |
+
+---
+
+### **Tabla:** Proyecto
+
+**Descripción:** _Almacena los proyectos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumProy | INT | - | PK, NN | Identificador del proyecto |
+| Nombre | VARCHAR | 100 | NN | Nombre del proyecto |
+| Propuesta | VARCHAR | 255 | NN | Propuesta del proyecto |
+
+---
+
+### **Tabla:** Dependiente
+
+**Descripción:** _Almacena los dependientes de los profesores._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NombreDep | VARCHAR | 100 | PK, NN | Nombre del dependiente |
+| NumProf | INT | PK, FK, NN | Profesor al que pertenece |
+| FechaNaci | DATE | - | NN | Fecha de nacimiento |
+| Parentesco | VARCHAR | 50 | NN | Relación familiar |
+
+---
+
+### **Tabla:** Participa
+
+**Descripción:** _Relaciona profesores con proyectos._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumProf | INT | PK, FK, NN | Profesor participante |
+| NumProy | INT | PK, FK, NN | Proyecto asignado |
+| Rol | VARCHAR | 50 | NN | Rol desempeñado |
+
+---
+
+### **Tabla:** Cursa
+
+**Descripción:** _Relaciona alumnos con materias._
+
+| Campos | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Matricula | VARCHAR | 10 | PK, FK, NN | Alumno inscrito |
+| ClaveMateria | VARCHAR | 10 | PK, FK, NN | Materia cursada |
+| FechaInscripcion | DATE | - | NN | Fecha de inscripción |
+| CalFinal | DECIMAL | 4,2 | CK (0-10) | Calificación final |
+
+<br>
+
+# 5. Relaciones del sistema
+
+| Relación | Cardinalidad | Descripción |
+| :--- | :---: | :--- |
+| Alumno -> Telefono | 1:N | Un alumno puede tener varios teléfonos |
+| Alumno -> Credencial | 1:1 | Cada alumno posee una sola credencial |
+| Alumno -> Cursa | 1:N | Un alumno puede cursar varias materias |
+| Materia -> Cursa | 1:N | Una materia puede ser cursada por varios alumnos |
+| Profesor -> Materia | 1:N | Un profesor puede impartir varias materias |
+| Departamento -> Profesor | 1:N | Un departamento tiene varios profesores |
+| Profesor -> Dependiente | 1:N | Un profesor puede tener varios dependientes |
+| Profesor -> Participa | 1:N | Un profesor puede participar en varios proyectos |
+| Proyecto -> Participa | 1:N | Un proyecto puede tener varios profesores |
+
+<br>
+
+# 6. Matriz de Claves Foráneas
+
+| Tabla | Campo FK | Descripción |
+| :--- | :---: | :--- |
+| Telefono | Matricula | Alumno (Matricula) |
+| Credencial | Matricula | Alumno (Matricula) |
+| Materia | NumProf | Profesor (NumProf) |
+| Profesor | NumDepto | Departamento (NumDepto) |
+| Dependiente | NumProf | Profesor (NumProf) |
+| Participa | NumProf | Profesor (NumProf) |
+| Participa | NumProy | Proyecto (NumProy) |
+| Cursa | Matricula | Alumno (Matricula) |
+| Cursa | ClaveMateria | Materia (ClaveMateria) |
+
+<br>
+
+# 7. Integridad referencial
+
+| Regla | Descripción |
+| :--- | :--- |
+| IR-01 | No se puede registrar un teléfono para un alumno inexistente. |
+| IR-02 | No se puede crear una credencial para un alumno inexistente. |
+| IR-03 | No se puede registrar una materia con un profesor inexistente. |
+| IR-04 | No se puede registrar un profesor en un departamento inexistente. |
+| IR-05 | No se puede registrar un dependiente para un profesor inexistente. |
+| IR-06 | No se puede asignar un profesor a un proyecto inexistente. |
+| IR-07 | No se puede inscribir un alumno en una materia inexistente. |
+
+<br>
+
+# 8. Reglas del negocio
+
+| Código | Regla |
+| :--- | :--- |
+| RN-01 | Un alumno puede tener varios teléfonos. |
+| RN-02 | Cada alumno posee una única credencial. |
+| RN-03 | Un alumno puede cursar varias materias y una materia puede ser cursada por varios alumnos. |
+| RN-04 | Un profesor pertenece a un solo departamento. |
+| RN-05 | Un profesor puede impartir varias materias. |
+| RN-06 | Un profesor puede participar en varios proyectos y un proyecto puede tener varios profesores. |
+| RN-07 | Un profesor puede registrar varios dependientes. |
+<br>
+
+9. Diagrama Relacional
+![Solucion Ej7](../img/Largooo,%20telefono,%20alumno,dependiente%20etc.drawio.png)
