@@ -417,4 +417,23 @@ WHERE proveedor_id = 1;
 DELETE FROM proveedor 
 WHERE provedor_id = 1;
 
+
+
+
+
+
+
+## Alter TABLE
+
+permite modificar una tabla existente
+
+puede:
+
+- Agregar columnas
+- 
+-
+-
+
+-
+
 -- sE DEBE REALIZAR EL ON UPDATE NO ACTION Y LAS DEMAS INTEGRIDADES REFERENCIALES
