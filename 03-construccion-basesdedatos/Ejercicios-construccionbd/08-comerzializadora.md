@@ -1,4 +1,4 @@
--- CREAR BASE DE DATOS
+```-- CREAR BASE DE DATOS
 CREATE DATABASE comercializadora;
 GO
 
@@ -190,4 +190,8 @@ CONSTRAINT fk_Detalle_pedido_producto
 FOREIGN KEY (producto_id, fabricante_id)
 REFERENCES producto (producto_id, fabricante_id)
 );
-GO
+GO```
+
+##Diagrama 
+
+![Diagrama 8](../..img)
