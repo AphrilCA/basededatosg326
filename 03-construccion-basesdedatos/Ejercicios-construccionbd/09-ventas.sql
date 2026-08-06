@@ -1,0 +1,107 @@
+CREATE DATABASE empresa_ventas;
+GO
+
+USE empresa_ventas;
+GO
+
+CREATE TABLE representante(
+num_representante INT NOT NULL,
+nombre VARCHAR(30) NOT NULL,
+apellido VARCHAR(30) NOT NULL,
+edad INT NOT NULL,
+puesto VARCHAR(30) NOT NULL,
+fecha_contrato DATE NOT NULL,
+cuota_ventas DECIMAL(12,2) NOT NULL,
+ventas DECIMAL(12,2) NOT NULL,
+num_jefe INT NULL,
+CONSTRAINT pk_representante
+PRIMARY KEY (num_representante),
+CONSTRAINT fk_representante_jefe
+FOREIGN KEY (num_jefe)
+REFERENCES representante(num_representante)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+);
+GO
+
+CREATE TABLE oficina(
+num_oficina INT NOT NULL,
+ciudad VARCHAR(40) NOT NULL,
+region VARCHAR(30) NOT NULL,
+objetivo_ventas DECIMAL(12,2) NOT NULL,
+ventas DECIMAL(12,2) NOT NULL,
+num_gerente INT NOT NULL,
+CONSTRAINT fk_oficina_representante
+FOREIGN KEY (num_gerente)
+REFERENCES representante(num_representante)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+);
+GO
+
+CREATE TABLE cliente(
+num_cliente INT NOT NULL,
+nombre_cliente VARCHAR(50) NOT NULL,
+limite_credito DECIMAL(12,2) NOT NULL,
+num_representante INT NOT NULL,
+CONSTRAINT pk_cliente
+PRIMARY KEY (num_cliente),
+CONSTRAINT fk_cliente_representante
+FOREIGN KEY (num_representante)
+REFERENCES representante(num_representante)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+);
+GO
+
+CREATE TABLE pedido(
+num_pedido INT NOT NULL,
+fecha_pedido DATE NOT NULL,
+num_cliente INT NOT NULL,
+num_representante INT NOT NULL,
+CONSTRAINT pk_pedido
+PRIMARY KEY (num_pedido),
+CONSTRAINT fk_pedido_cliente
+FOREIGN KEY (num_cliente)
+REFERENCES cliente(num_cliente)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION,
+CONSTRAINT fk_pedido_representante
+FOREIGN KEY (num_representante)
+REFERENCES representante(num_representante)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+);
+GO
+
+CREATE TABLE producto(
+num_producto INT NOT NULL,
+nombre_producto VARCHAR(40) NOT NULL,
+descripcion VARCHAR(100) NULL,
+precio DECIMAL(10,2) NOT NULL,
+existencias INT NOT NULL,
+fabricante VARCHAR(40) NOT NULL,
+CONSTRAINT pk_producto
+PRIMARY KEY (num_producto)
+);
+GO
+
+CREATE TABLE detalle_pedido(
+num_pedido INT NOT NULL,
+num_producto INT NOT NULL,
+cantidad INT NOT NULL,
+importe DECIMAL(12,2) NOT NULL,
+CONSTRAINT pk_detalle_pedido
+PRIMARY KEY (num_pedido, num_producto),
+CONSTRAINT fk_detalle_pedido_pedido
+FOREIGN KEY (num_pedido)
+REFERENCES pedido(num_pedido)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION,
+CONSTRAINT fk_detalle_pedido_producto
+FOREIGN KEY (num_producto)
+REFERENCES producto(num_producto)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+);
+GO

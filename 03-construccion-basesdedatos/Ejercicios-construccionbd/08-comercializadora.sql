@@ -191,3 +191,6 @@ FOREIGN KEY (producto_id, fabricante_id)
 REFERENCES producto (producto_id, fabricante_id)
 );
 GO
+
+	
+
