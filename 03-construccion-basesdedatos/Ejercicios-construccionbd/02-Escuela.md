@@ -51,4 +51,4 @@ SELECT *
 FROM curso;
 ```
 ## DIAGRAMA
-![alt text](../../img/Escuela.png)
+![alt text](../img/Escuela.png)
