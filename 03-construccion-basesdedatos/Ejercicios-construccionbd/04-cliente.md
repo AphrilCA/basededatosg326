@@ -68,4 +68,4 @@ FROM producto;
 
 ##DIAGRAMA
 
-![alt text](../../img/Pedidos.png)
+![alt text](img/Pedidos.png)
