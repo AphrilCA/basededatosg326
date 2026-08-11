@@ -66,6 +66,6 @@ SELECT *
 FROM producto;
 ```
 
-##DIAGRAMA
+## DIAGRAMA
 
-![alt text](../img/Pedidos.png)
+![Diagrama de pedidos](./img/Pedidos.png)
