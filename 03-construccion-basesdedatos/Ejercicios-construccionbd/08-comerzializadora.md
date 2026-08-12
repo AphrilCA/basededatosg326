@@ -192,6 +192,6 @@ REFERENCES producto (producto_id, fabricante_id)
 );
 GO```
 
-##Diagrama 
+## Diagrama 
 
-![Diagrama 8](../..img)
+![Diagrama 8](../../img/Comercializadora.png)
