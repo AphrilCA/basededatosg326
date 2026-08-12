@@ -125,4 +125,4 @@ GO
 
 ##DIAGRAMA
 
-![alt text](../../img/Employee2.png)
+![alt text](../../img/Construccion/Employee2.png)

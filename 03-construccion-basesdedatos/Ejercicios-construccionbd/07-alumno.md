@@ -161,4 +161,4 @@ GO
 
 ##DIAGRAMA
 
-![alt text](../../img/Alumno.png)
+![alt text](../../img/Construccion/Alumno.png)

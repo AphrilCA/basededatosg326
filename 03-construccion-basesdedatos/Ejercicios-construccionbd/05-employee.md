@@ -110,4 +110,4 @@ GO
 ```
 
 ##DIAGRAMA
-![alt text](../../img/Employee.png)
+![alt text](../../img/Construccion/Employee.png)

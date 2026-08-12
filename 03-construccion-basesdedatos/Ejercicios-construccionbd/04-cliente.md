@@ -68,4 +68,4 @@ FROM producto;
 
 ## DIAGRAMA
 
-![Diagrama de pedidos](pedidos.png)
+![Diagrama de pedidos](../../img/Construccion/Pedidos.png)

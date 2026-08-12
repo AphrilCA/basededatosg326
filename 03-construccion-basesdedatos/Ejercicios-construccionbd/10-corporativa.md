@@ -160,4 +160,4 @@ GO
 ```
 
 ##DIAGRAMA
-![alt text](../../img/Corporativa.png)
+![alt text](../../img/Construccion/Corporativa.png)

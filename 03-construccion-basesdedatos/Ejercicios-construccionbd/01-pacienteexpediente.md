@@ -38,4 +38,4 @@ GO
 ## DIAGRAMA
 
 
-![Prueba](../../img/paciente_expediente.png)
+![Prueba](../../img/Construccion/paciente_expediente.png)

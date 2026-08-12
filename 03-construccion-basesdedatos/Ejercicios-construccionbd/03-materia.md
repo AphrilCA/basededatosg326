@@ -59,4 +59,4 @@ GO
 
 ##DIAGRAMA
 
-![Prueba](../../img/Escolar.png)
+![Prueba](../../img/Construccion/Escolar.png)

@@ -111,4 +111,4 @@ GO
 
 ##DIAGRAMA
 
-![alt text](../../img/Ventas.png)
+![alt text](../../img/Construccion/Ventas.png)
